@@ -14,7 +14,7 @@ class Alignment(models.Model):
 
     def __str__(self,):
 
-        return alignment
+        return self.alignment
 
 class HitDieType(models.Model):
 
@@ -24,7 +24,7 @@ class HitDieType(models.Model):
 
     def __str__(self,):
 
-        return hitDieType
+        return self.hitDieType
 
 class Size(models.Model):
 
@@ -33,7 +33,7 @@ class Size(models.Model):
 
     def __Str__(self,):
 
-        return size
+        return self.size
 
 class Subtype(models.Model):
 
@@ -42,7 +42,7 @@ class Subtype(models.Model):
 
     def __Str__(self,):
 
-        return subtype
+        return self.subtype
 
 class Type(models.Model):
 
@@ -51,7 +51,7 @@ class Type(models.Model):
 
     def __str__(self,):
 
-        return type
+        return self.type
 
 # class ConditionImmunities(models.Model):
 #
@@ -61,7 +61,7 @@ class Type(models.Model):
 #
 #     def __str__(self,):
 #
-#         return conditionImmunity
+#         return self.conditionImmunity
 #
 # class DamageImmunities(models.Model):
 #
@@ -71,7 +71,7 @@ class Type(models.Model):
 #
 #     def __str__(self,):
 #
-#         return damageImmunity
+#         return self.damageImmunity
 #
 # class DamageResistances(models.Model):
 #
@@ -80,7 +80,7 @@ class Type(models.Model):
 #
 #     def __str__(self,):
 #
-#         return damageResistance
+#         return self.damageResistance
 #
 # class DamageVulnerabilities(models.Model):
 #
@@ -89,7 +89,7 @@ class Type(models.Model):
 #
 #     def __Str__(sef,):
 #
-#         return damageVulnerability
+#         return self.damageVulnerability
 #
 # class Languages(models.Model):
 #
@@ -98,7 +98,7 @@ class Type(models.Model):
 #
 #     def __str__(self,):
 #
-#         return language
+#         return self.language
 # class Senses(models.Model):
 #
 #     # Fields
@@ -106,7 +106,7 @@ class Type(models.Model):
 #
 #     def __str__(self,):
 #
-#         return sense
+#         return self.sense
 #
 # class Speed(models.Model):
 #
@@ -115,7 +115,7 @@ class Type(models.Model):
 #
 #     def __str__(self,):
 #
-#         return speed
+#         return self.speed
 
 
 
@@ -186,17 +186,65 @@ class Creature(models.Model):
         return "{}, {}".format(self.name,self.type)
 
 
-# Fields - Text one (creature)-to-many (actions)
+# Fields - Text: one (creature)-to-many (actions)
 
-# actions = models.TextField(null=True)
-# legendaryActions = models.TextField(null=True)
-# reactions = models.TextField(null=True)
-# specialAbilities = models.TextField(null=True)
+class Action_Name(models.Model):
+
+    # Fields
+    name = models.CharField(max_length=128)
+
+    def __str__(self,):
+
+        return self.name
 
 class Actions(models.Model):
 
     # Fields
-    name = ForeignKey(Action_Name,on_delete=models.CASCADE)
-    desc = TextField()
-    damageDice = CharField(max_length=8)
-    damageBonus = CharField(max_length=8)
+    name = models.ForeignKey(Action_Name,on_delete=models.CASCADE)
+    desc = models.TextField()
+    damageDice = models.CharField(max_length=8,null=True)
+    damageBonus = models.IntegerField(null=True)
+    attackBonus = models.IntegerField()
+    creature = models.ForeignKey(Creature,on_delete=models.CASCADE)
+
+    def __str__(self,):
+
+        return self.name
+
+class LegendaryActions(models.Model):
+
+    # Fields
+    name = models.ForeignKey(Action_Name,on_delete=models.CASCADE)
+    desc = models.TextField()
+    damageDice = models.CharField(max_length=8,null=True)
+    attackBonus = models.IntegerField()
+    creature = models.ForeignKey(Creature,on_delete=models.CASCADE)
+
+    def __str__(self,):
+
+        return self.name
+
+class Rections(models.Model):
+
+    # Fields
+    name = models.ForeignKey(Action_Name,on_delete=models.CASCADE)
+    desc = models.TextField()
+    attackBonus = models.IntegerField()
+    creature = models.ForeignKey(Creature,on_delete=models.CASCADE)
+
+    def __str__(self,):
+
+        return self.name
+
+class SpecialAbilities(models.Model):
+
+    # Fields
+    name = models.ForeignKey(Action_Name,on_delete=models.CASCADE)
+    desc = models.TextField()
+    damageDice = models.CharField(max_length=8,null=True)
+    attackBonus = models.IntegerField()
+    creature = models.ForeignKey(Creature,on_delete=models.CASCADE)
+
+    def __str__(self,):
+
+        return self.name

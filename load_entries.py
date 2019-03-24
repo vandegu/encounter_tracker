@@ -56,7 +56,7 @@ fields = ['acrobatics', 'actions', 'alignment', 'arcana', 'armor_class',
 # Loop through entries, look to see if the object has already occured in the DB,
 # if not, get it and update the DB. Start with the ForeignKeys.
 print('Entering monsters...\n')
-for e in entries[:100]:
+for e in entries[:]:
 
     # Get HD for split (0 for full, 1 for first group, 2 for second group)
     HD = re.match(r"(.+)(d.+)",e['hit_dice'])
@@ -112,7 +112,7 @@ for e in entries[:100]:
 
     # Get monster entries. Carriage return after name is intentional...attaches the
     # above added entries to the creature.
-    print("CREATURE ENTRY: {}\n".format(e['name']))
+    print("CREATURE ENTRY: {}".format(e['name']))
 
     # Check for fields with no entry, if so, give them an entry of None to convert to NULL in DB...
 
@@ -176,3 +176,107 @@ for e in entries[:100]:
                         )
 
     creature.save()
+
+    # Get the Actions...make entries for them and their dependencies...
+    if 'actions' in e and e['actions'] != None:
+        for action in e['actions']:
+
+            # Check the NULLS...
+            for check in ['damage_bonus','damage_dice']:
+                if check in action:
+                    continue
+                else:
+                    action[check] = None
+
+            try:
+                aname = cm.Action_Name.objects.get(name=action['name'])
+            except:
+                print("Inserting M-1 action_name {}...".format(action['name']))
+                # I'd like to more fully understand what's happening in the below 2 lines...
+                aname = cm.Action_Name(name=action['name'])
+                aname.save()
+
+            act = cm.Actions(name = aname,
+                             desc = action['desc'],
+                             damageDice = action['damage_dice'],
+                             damageBonus = action['damage_bonus'],
+                             attackBonus = action['attack_bonus'],
+                             creature = creature
+                             )
+
+            act.save()
+
+    if 'legendary_actions' in e and e['legendary_actions'] != None:
+        for action in e['legendary_actions']:
+
+            # Check the NULLS...
+            for check in ['damage_dice']:
+                if check in action:
+                    continue
+                else:
+                    action[check] = None
+
+            try:
+                aname = cm.Action_Name.objects.get(name=action['name'])
+            except:
+                print("Inserting M-1 legendary action_name {}...".format(action['name']))
+                # I'd like to more fully understand what's happening in the below 2 lines...
+                aname = cm.Action_Name(name=action['name'])
+                aname.save()
+
+            act = cm.LegendaryActions(name = aname,
+                             desc = action['desc'],
+                             damageDice = action['damage_dice'],
+                             attackBonus = action['attack_bonus'],
+                             creature = creature
+                             )
+
+            act.save()
+
+    if 'reactions' in e and e['reactions'] != None:
+        for action in e['reactions']:
+
+            try:
+                aname = cm.Action_Name.objects.get(name=action['name'])
+            except:
+                print("Inserting M-1 reaction_name {}...".format(action['name']))
+                # I'd like to more fully understand what's happening in the below 2 lines...
+                aname = cm.Action_Name(name=action['name'])
+                aname.save()
+
+            act = cm.Rections(name = aname,
+                             desc = action['desc'],
+                             attackBonus = action['attack_bonus'],
+                             creature = creature
+                             )
+
+            act.save()
+
+    if 'special_abilities' in e and e['special_abilities'] != None:
+        for action in e['special_abilities']:
+
+            # Check the NULLS...
+            for check in ['damage_dice']:
+                if check in action:
+                    continue
+                else:
+                    action[check] = None
+
+            try:
+                aname = cm.Action_Name.objects.get(name=action['name'])
+            except:
+                print("Inserting M-1 special ability action_name {}...".format(action['name']))
+                # I'd like to more fully understand what's happening in the below 2 lines...
+                aname = cm.Action_Name(name=action['name'])
+                aname.save()
+
+            act = cm.SpecialAbilities(name = aname,
+                             desc = action['desc'],
+                             damageDice = action['damage_dice'],
+                             attackBonus = action['attack_bonus'],
+                             creature = creature
+                             )
+
+            act.save()
+
+    print('\n')
