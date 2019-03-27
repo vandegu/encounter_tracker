@@ -58,7 +58,7 @@ fields = ['acrobatics', 'actions', 'alignment', 'arcana', 'armor_class',
 # Loop through entries, look to see if the object has already occured in the DB,
 # if not, get it and update the DB. Start with the ForeignKeys.
 print('Entering monsters...\n')
-for e in entries[:]:
+for e in entries:
 
     # Get HD for split (0 for full, 1 for first group, 2 for second group)
     HD = re.match(r"(.+)(d.+)",e['hit_dice'])
@@ -74,7 +74,7 @@ for e in entries[:]:
     try:
         alignment = cm.Alignment.objects.get(alignment=e['alignment'])
     except:
-        print("Inserting 1-M alignment {}...".format(e['alignment']))
+        print("Inserting 1-M alignment '{}'...".format(e['alignment']))
         # I'd like to more fully understand what's happening in the below 2 lines...
         alignment = cm.Alignment(alignment=e['alignment'])
         alignment.save()
@@ -82,7 +82,7 @@ for e in entries[:]:
     try:
         hitDieType = cm.HitDieType.objects.get(hitDieType=HD.group(2))
     except:
-        print("Inserting 1-M hit-die type {}...".format(HD.group(2)))
+        print("Inserting 1-M hit-die type '{}'...".format(HD.group(2)))
         # I'd like to more fully understand what's happening in the below 2 lines...
         hitDieType = cm.HitDieType(hitDieType=HD.group(2))
         hitDieType.save()
@@ -90,7 +90,7 @@ for e in entries[:]:
     try:
         size = cm.Size.objects.get(size=e['size'])
     except:
-        print("Inserting 1-M size {}...".format(e['size']))
+        print("Inserting 1-M size '{}'...".format(e['size']))
         # I'd like to more fully understand what's happening in the below 2 lines...
         size = cm.Size(size=e['size'])
         size.save()
@@ -99,7 +99,7 @@ for e in entries[:]:
     try:
         subtype = cm.Subtype.objects.get(subtype=e['subtype'])
     except:
-        print("Inserting 1-M subtype {}...".format(e['subtype']))
+        print("Inserting 1-M subtype '{}'...".format(e['subtype']))
         # I'd like to more fully understand what's happening in the below 2 lines...
         subtype = cm.Subtype(subtype=e['subtype'])
         subtype.save()
@@ -107,7 +107,7 @@ for e in entries[:]:
     try:
         type = cm.Type.objects.get(type=e['type'])
     except:
-        print("Inserting 1-M type {}...".format(e['type']))
+        print("Inserting 1-M type '{}'...".format(e['type']))
         # I'd like to more fully understand what's happening in the below 2 lines...
         type = cm.Type(type=e['type'])
         type.save()
@@ -193,7 +193,7 @@ for e in entries[:]:
             try:
                 aname = cm.Action_Name.objects.get(name=action['name'])
             except:
-                print("Inserting M-1 action_name {}...".format(action['name']))
+                print("Inserting M-1 action_name '{}'...".format(action['name']))
                 # I'd like to more fully understand what's happening in the below 2 lines...
                 aname = cm.Action_Name(name=action['name'])
                 aname.save()
@@ -221,7 +221,7 @@ for e in entries[:]:
             try:
                 aname = cm.Action_Name.objects.get(name=action['name'])
             except:
-                print("Inserting M-1 legendary action_name {}...".format(action['name']))
+                print("Inserting M-1 legendary action_name '{}'...".format(action['name']))
                 # I'd like to more fully understand what's happening in the below 2 lines...
                 aname = cm.Action_Name(name=action['name'])
                 aname.save()
@@ -241,7 +241,7 @@ for e in entries[:]:
             try:
                 aname = cm.Action_Name.objects.get(name=action['name'])
             except:
-                print("Inserting M-1 reaction_name {}...".format(action['name']))
+                print("Inserting M-1 reaction_name '{}'...".format(action['name']))
                 # I'd like to more fully understand what's happening in the below 2 lines...
                 aname = cm.Action_Name(name=action['name'])
                 aname.save()
@@ -267,7 +267,7 @@ for e in entries[:]:
             try:
                 aname = cm.Action_Name.objects.get(name=action['name'])
             except:
-                print("Inserting M-1 special ability action_name {}...".format(action['name']))
+                print("Inserting M-1 special ability action_name '{}'...".format(action['name']))
                 # I'd like to more fully understand what's happening in the below 2 lines...
                 aname = cm.Action_Name(name=action['name'])
                 aname.save()
@@ -295,7 +295,7 @@ for e in entries[:]:
             try:
                 conditionImmunity = cm.ConditionImmunities.objects.get(conditionImmunity=ci)
             except:
-                print("Inserting M-M condition immunity {}...".format(ci))
+                print("Inserting M-M condition immunity '{}'...".format(ci))
                 # I'd like to more fully understand what's happening in the below 2 lines...
                 conditionImmunity = cm.ConditionImmunities(conditionImmunity=ci)
                 conditionImmunity.save()
@@ -324,7 +324,7 @@ for e in entries[:]:
             try:
                 damageImmunity = cm.DamageType.objects.get(damageType=ci)
             except:
-                print("Inserting M-M damage immunity {}...".format(ci))
+                print("Inserting M-M damage immunity '{}'...".format(ci))
                 # I'd like to more fully understand what's happening in the below 2 lines...
                 damageImmunity = cm.DamageType(damageType=ci)
                 damageImmunity.save()
@@ -353,7 +353,7 @@ for e in entries[:]:
             try:
                 damageResistance = cm.DamageType.objects.get(damageType=ci)
             except:
-                print("Inserting M-M damage resistance {}...".format(ci))
+                print("Inserting M-M damage resistance '{}'...".format(ci))
                 # I'd like to more fully understand what's happening in the below 2 lines...
                 damageResistance = cm.DamageType(damageType=ci)
                 damageResistance.save()
@@ -382,7 +382,7 @@ for e in entries[:]:
             try:
                 damageVulnerability = cm.DamageType.objects.get(damageType=ci)
             except:
-                print("Inserting M-M damage vulnerability {}...".format(ci))
+                print("Inserting M-M damage vulnerability '{}'...".format(ci))
                 # I'd like to more fully understand what's happening in the below 2 lines...
                 damageVulnerability = cm.DamageType(damageType=ci)
                 damageVulnerability.save()
@@ -402,7 +402,7 @@ for e in entries[:]:
             try:
                 language = cm.Languages.objects.get(language=ci)
             except:
-                print("Inserting M-M language {}...".format(ci))
+                print("Inserting M-M language '{}'...".format(ci))
                 # I'd like to more fully understand what's happening in the below 2 lines...
                 language = cm.Languages(language=ci)
                 language.save()
@@ -419,13 +419,42 @@ for e in entries[:]:
             try:
                 senses = cm.Senses.objects.get(sense=ci)
             except:
-                print("Inserting M-M sense {}...".format(ci))
+                print("Inserting M-M sense '{}'...".format(ci))
                 # I'd like to more fully understand what's happening in the below 2 lines...
                 senses = cm.Senses(sense=ci)
                 senses.save()
 
             # Create entry in through table now.
             zz = cm.SensesCreature(sense = senses,
+                                                creature = creature)
+
+            zz.save()
+
+    if 'speed' in e and e['speed'] != None and e['speed'] != '':
+        if re.search(r'\((.{6,})\)',e['speed']):
+            a = re.search(r'\((.{6,})\)',e['speed'])
+            cis = [e['speed'][a.span()[0]:a.span()[1]]]
+            _dummy = e['speed'][:a.span()[0]]+e['speed'][a.span()[1]:]
+            others = _dummy.split(', ')
+            cis += others
+        else:
+            cis = e['speed'].split(', ')
+        # Make things a little easier when looking at the DB by including the 'walk' label
+        # to base land speed (which normally just shows up as e.g. '30 ft.').
+
+        for ci in cis:
+            if re.search(r'^[0-9]{1,2}\Wft\.',ci):
+                ci = 'walk '+ci
+            try:
+                speed = cm.Speed.objects.get(speed=ci)
+            except:
+                print("Inserting M-M speed '{}'...".format(ci))
+                # I'd like to more fully understand what's happening in the below 2 lines...
+                speed = cm.Speed(speed=ci)
+                speed.save()
+
+            # Create entry in through table now.
+            zz = cm.SpeedCreature(speed = speed,
                                                 creature = creature)
 
             zz.save()
