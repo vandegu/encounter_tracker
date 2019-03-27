@@ -393,5 +393,24 @@ for e in entries[:]:
 
             zz.save()
 
+    if 'languages' in e and e['languages'] != None and e['languages'] != '':
+        if re.search(r'but',e['languages']):
+            cis = [e['languages']]
+        else:
+            cis = e['languages'].split(', ')
+        for ci in cis:
+            try:
+                language = cm.Languages.objects.get(language=ci)
+            except:
+                print("Inserting M-M language {}...".format(ci))
+                # I'd like to more fully understand what's happening in the below 2 lines...
+                language = cm.Languages(language=ci)
+                language.save()
+
+            # Create entry in through table now.
+            zz = cm.LanguagesCreature(language = language,
+                                                creature = creature)
+
+            zz.save()
 
     print('\n')

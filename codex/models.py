@@ -76,32 +76,15 @@ class DamageType(models.Model):
 
         return self.damageType
 
-# class DamageResistances(models.Model):
-#
-#     # Fields
-#     damageResistance = models.CharField(max_length=256)
-#
-#     def __str__(self,):
-#
-#         return self.damageResistance
-#
-# class DamageVulnerabilities(models.Model):
-#
-#     # Fields
-#     damageVulnerability = models.CharField(max_length=256)
-#
-#     def __Str__(sef,):
-#
-#         return self.damageVulnerability
-#
-# class Languages(models.Model):
-#
-#     # Fields
-#     language = models.CharField(max_length=256)
-#
-#     def __str__(self,):
-#
-#         return self.language
+class Languages(models.Model):
+
+    # Fields
+    language = models.CharField(max_length=256)
+
+    def __str__(self,):
+
+        return self.language
+
 # class Senses(models.Model):
 #
 #     # Fields
@@ -179,7 +162,7 @@ class Creature(models.Model):
     damageImmunities = models.ManyToManyField(DamageType,through='DamageImmunitiesCreature',related_name='immunity')
     damageResistances = models.ManyToManyField(DamageType,through='DamageResistancesCreature',related_name='resistance')
     damageVulnerabilities = models.ManyToManyField(DamageType,through='DamageVulnerabilitiesCreature',related_name='vulnerability')
-    # languages = models.ManyToManyField(Languages,null=True) # Explanation area? Or just str...
+    languages = models.ManyToManyField(Languages,through='LanguagesCreature') # Explanation area? Or just str...
     # senses = models.ManyToManyField(Senses,null=True)
     # speed = models.ManyToManyField(Speed)
 
@@ -218,6 +201,11 @@ class DamageResistancesCreature(models.Model):
 class DamageVulnerabilitiesCreature(models.Model):
 
     damageVulnerability = models.ForeignKey(DamageType,on_delete=models.CASCADE)
+    creature = models.ForeignKey(Creature,on_delete=models.CASCADE)
+
+class LanguagesCreature(models.Model):
+
+    language = models.ForeignKey(Languages,on_delete=models.CASCADE)
     creature = models.ForeignKey(Creature,on_delete=models.CASCADE)
 
 # Fields - Text: one (creature)-to-many (actions)
