@@ -364,5 +364,34 @@ for e in entries[:]:
 
             zz.save()
 
+    if 'damage_vulnerabilities' in e and e['damage_vulnerabilities'] != None and e['damage_vulnerabilities'] != '':
+        if re.search(r'from',e['damage_vulnerabilities']):
+            a = e['damage_vulnerabilities'].split('; ')
+            if len(a)>1:
+                out = a[0].split(', ')
+                cis = out+a[1:]
+            else:
+                cis = a
+        else:
+            cis = e['damage_vulnerabilities'].split(', ')
+            # qqq.write(e['damage_immunities']+'\n')
+            # for zzz in cis:
+            #     qqq.write('{}|'.format(zzz))
+            # qqq.write('\n\n\n')
+        for ci in cis:
+            try:
+                damageVulnerability = cm.DamageType.objects.get(damageType=ci)
+            except:
+                print("Inserting M-M damage vulnerability {}...".format(ci))
+                # I'd like to more fully understand what's happening in the below 2 lines...
+                damageVulnerability = cm.DamageType(damageType=ci)
+                damageVulnerability.save()
+
+            # Create entry in through table now.
+            zz = cm.DamageVulnerabilitiesCreature(damageVulnerability = damageVulnerability,
+                                                creature = creature)
+
+            zz.save()
+
 
     print('\n')

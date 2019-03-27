@@ -178,7 +178,7 @@ class Creature(models.Model):
                                                  )
     damageImmunities = models.ManyToManyField(DamageType,through='DamageImmunitiesCreature',related_name='immunity')
     damageResistances = models.ManyToManyField(DamageType,through='DamageResistancesCreature',related_name='resistance')
-    # damageVulnerabilities = models.ManyToManyField(DamageVulnerabilities,null=True)
+    damageVulnerabilities = models.ManyToManyField(DamageType,through='DamageVulnerabilitiesCreature',related_name='vulnerability')
     # languages = models.ManyToManyField(Languages,null=True) # Explanation area? Or just str...
     # senses = models.ManyToManyField(Senses,null=True)
     # speed = models.ManyToManyField(Speed)
@@ -195,6 +195,10 @@ class Creature(models.Model):
 # then define the through table as a table with a foreign key to both. Neither of
 # the sides should have any indication of the other...all their pairing info is stored
 # in the through table. Furthermore, this means that NULLs are not needed whatsoever.
+#
+# Finally, since multiple m2m relationships have an endpoint at the DamageType table, the
+# related_name of each must be different. I do not believe this shows up in the tables
+# themselves anywhere...just an "under the hood" label.
 
 class ConditionImmunitiesCreature(models.Model):
 
@@ -209,6 +213,11 @@ class DamageImmunitiesCreature(models.Model):
 class DamageResistancesCreature(models.Model):
 
     damageResistance = models.ForeignKey(DamageType,on_delete=models.CASCADE)
+    creature = models.ForeignKey(Creature,on_delete=models.CASCADE)
+
+class DamageVulnerabilitiesCreature(models.Model):
+
+    damageVulnerability = models.ForeignKey(DamageType,on_delete=models.CASCADE)
     creature = models.ForeignKey(Creature,on_delete=models.CASCADE)
 
 # Fields - Text: one (creature)-to-many (actions)
