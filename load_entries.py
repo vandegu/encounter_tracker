@@ -7,6 +7,8 @@ import os
 import re
 import codex.models as cm
 
+qqq = open('damages.txt','w')
+
 # https://stackoverflow.com/questions/7584418/iterate-the-classes-defined-in-a-module-imported-dynamically
 classes = dict([(name, cls) for name, cls in cm.__dict__.items() if isinstance(cls, type)])
 
@@ -244,7 +246,7 @@ for e in entries[:]:
                 aname = cm.Action_Name(name=action['name'])
                 aname.save()
 
-            act = cm.Rections(name = aname,
+            act = cm.Reactions(name = aname,
                              desc = action['desc'],
                              attackBonus = action['attack_bonus'],
                              creature = creature
@@ -278,5 +280,64 @@ for e in entries[:]:
                              )
 
             act.save()
+
+    # Get the many-to-many's:
+    #
+    # I think the through table will keep track most of this info, and there is no
+    # way or need to have this info present on either table. In other words, it is
+    # not necessary for the creatures to know what conditions, or the conditions to
+    # know their creatures, because this info is stored by the through table. So,
+    # just use this to define the immunities from each creature!
+
+    if 'condition_immunities' in e and e['condition_immunities'] != None:
+        cis = re.findall(r'(\w+)',e['condition_immunities'])
+        for ci in cis:
+            try:
+                conditionImmunity = cm.ConditionImmunities.objects.get(conditionImmunity=ci)
+            except:
+                print("Inserting M-M condition immunity {}...".format(ci))
+                # I'd like to more fully understand what's happening in the below 2 lines...
+                conditionImmunity = cm.ConditionImmunities(conditionImmunity=ci)
+                conditionImmunity.save()
+
+            # Create entry in through table now.
+            zz = cm.ConditionImmunitiesCreature(conditionImmunity = conditionImmunity,
+                                                creature = creature)
+
+            zz.save()
+
+    if 'damage_immunities' in e and e['damage_immunities'] != None and e['damage_immunities'] != '':
+        if re.search(r'from',e['damage_immunities']):
+            a = e['damage_immunities'].split('; ')
+            if len(a)>1:
+                out = a[0].split(', ')
+                cis = out+a[1:]
+            else:
+                cis = a
+            # qqq.write(e['damage_immunities']+'\n')
+            # for zzz in cis:
+            #     qqq.write('{}|'.format(zzz))
+            # qqq.write('\n\n\n')
+        else:
+            cis = e['damage_immunities'].split(', ')
+            # qqq.write(e['damage_immunities']+'\n')
+            # for zzz in cis:
+            #     qqq.write('{}|'.format(zzz))
+            # qqq.write('\n\n\n')
+        for ci in cis:
+            try:
+                damageImmunity = cm.DamageType.objects.get(damageType=ci)
+            except:
+                print("Inserting M-M damage immunity {}...".format(ci))
+                # I'd like to more fully understand what's happening in the below 2 lines...
+                damageImmunity = cm.DamageType(damageType=ci)
+                damageImmunity.save()
+
+            # Create entry in through table now.
+            zz = cm.DamageImmunitiesCreature(damageImmunity = damageImmunity,
+                                                creature = creature)
+
+            zz.save()
+
 
     print('\n')

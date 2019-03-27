@@ -53,26 +53,29 @@ class Type(models.Model):
 
         return self.type
 
-# class ConditionImmunities(models.Model):
-#
-#     # Fields
-#     conditionImmunity = models.CharField(max_length=256)
-#     # For numerous weirdly formatted explained ones, just throw them in here as strs separately.
-#
-#     def __str__(self,):
-#
-#         return self.conditionImmunity
-#
-# class DamageImmunities(models.Model):
-#
-#     # Fields
-#     damageImmunity = models.CharField(max_length=256)
-#     # For numerous weirdly formatted explained ones, just throw them in here as strs separately.
-#
-#     def __str__(self,):
-#
-#         return self.damageImmunity
-#
+class ConditionImmunities(models.Model):
+
+    # Fields
+    conditionImmunity = models.CharField(max_length=256)
+    # For numerous weirdly formatted explained ones, just throw them in here as strs separately.
+
+    # The 'creatures' field will be filled in here by Creature
+
+    def __str__(self,):
+
+        return self.conditionImmunity
+
+# For immunities, resistences, and vulnerabilities:
+class DamageType(models.Model):
+
+    # Fields
+    damageType = models.CharField(max_length=256)
+    # For numerous weirdly formatted explained ones, just throw them in here as strs separately.
+
+    def __str__(self,):
+
+        return self.damageType
+
 # class DamageResistances(models.Model):
 #
 #     # Fields
@@ -116,8 +119,6 @@ class Type(models.Model):
 #     def __str__(self,):
 #
 #         return self.speed
-
-
 
 class Creature(models.Model):
 
@@ -164,16 +165,18 @@ class Creature(models.Model):
     passivePerception = models.IntegerField() # Gathered from Senses...
     proficiencyBonus = models.IntegerField() # Based on CR...
 
-    # Fields - ForeignKeys...one-to-many
+    # Fields - ForeignKeys...many creatures to one
     alignment = models.ForeignKey(Alignment,on_delete=models.CASCADE)
     hitDieType = models.ForeignKey(HitDieType,on_delete=models.CASCADE)
     size = models.ForeignKey(Size,on_delete=models.CASCADE)
     subtype = models.ForeignKey(Subtype,on_delete=models.CASCADE,null=True)
     type = models.ForeignKey(Type,on_delete=models.CASCADE)
 
-    # # Fields - ForeignKeys...many-to-many
-    # conditionImmunities = models.ManyToManyField(ConditionImmunities,null=True)
-    # damageImmunities = models.ManyToManyField(DamageImmunities,null=True)
+    # Fields - ForeignKeys...many-to-many
+    conditionImmunities = models.ManyToManyField(ConditionImmunities,through='ConditionImmunitiesCreature',
+                                                 #related_name='creatures',
+                                                 )
+    damageImmunities = models.ManyToManyField(DamageType,through='DamageImmunitiesCreature')
     # damageResistances = models.ManyToManyField(DamageResistances,null=True)
     # damageVulnerabilities = models.ManyToManyField(DamageVulnerabilities,null=True)
     # languages = models.ManyToManyField(Languages,null=True) # Explanation area? Or just str...
@@ -185,6 +188,18 @@ class Creature(models.Model):
         # Curious if this will return the connected type...or just the type foreign key?
         return "{}, {}".format(self.name,self.type)
 
+
+# Through tables for many-to-many:
+
+class ConditionImmunitiesCreature(models.Model):
+
+    conditionImmunity = models.ForeignKey(ConditionImmunities,on_delete=models.CASCADE)
+    creature = models.ForeignKey(Creature,on_delete=models.CASCADE)
+
+class DamageImmunitiesCreature(models.Model):
+
+    damageImmunity = models.ForeignKey(DamageType,on_delete=models.CASCADE)
+    creature = models.ForeignKey(Creature,on_delete=models.CASCADE)
 
 # Fields - Text: one (creature)-to-many (actions)
 
@@ -224,7 +239,7 @@ class LegendaryActions(models.Model):
 
         return self.name
 
-class Rections(models.Model):
+class Reactions(models.Model):
 
     # Fields
     name = models.ForeignKey(Action_Name,on_delete=models.CASCADE)
