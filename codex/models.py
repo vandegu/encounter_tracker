@@ -85,15 +85,15 @@ class Languages(models.Model):
 
         return self.language
 
-# class Senses(models.Model):
-#
-#     # Fields
-#     sense = models.CharField(max_length=256)
-#
-#     def __str__(self,):
-#
-#         return self.sense
-#
+class Senses(models.Model):
+
+    # Fields
+    sense = models.CharField(max_length=128)
+
+    def __str__(self,):
+
+        return self.sense
+
 # class Speed(models.Model):
 #
 #     # Fields
@@ -163,7 +163,7 @@ class Creature(models.Model):
     damageResistances = models.ManyToManyField(DamageType,through='DamageResistancesCreature',related_name='resistance')
     damageVulnerabilities = models.ManyToManyField(DamageType,through='DamageVulnerabilitiesCreature',related_name='vulnerability')
     languages = models.ManyToManyField(Languages,through='LanguagesCreature') # Explanation area? Or just str...
-    # senses = models.ManyToManyField(Senses,null=True)
+    senses = models.ManyToManyField(Senses,through='SensesCreature')
     # speed = models.ManyToManyField(Speed)
 
     def __str__(self,):
@@ -206,6 +206,11 @@ class DamageVulnerabilitiesCreature(models.Model):
 class LanguagesCreature(models.Model):
 
     language = models.ForeignKey(Languages,on_delete=models.CASCADE)
+    creature = models.ForeignKey(Creature,on_delete=models.CASCADE)
+
+class SensesCreature(models.Model):
+
+    sense = models.ForeignKey(Senses,on_delete=models.CASCADE)
     creature = models.ForeignKey(Creature,on_delete=models.CASCADE)
 
 # Fields - Text: one (creature)-to-many (actions)

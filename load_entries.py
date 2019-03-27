@@ -413,4 +413,21 @@ for e in entries[:]:
 
             zz.save()
 
+    if 'senses' in e and e['senses'] != None and e['senses'] != '':
+        cis = e['senses'].split(', ')[:-1]
+        for ci in cis:
+            try:
+                senses = cm.Senses.objects.get(sense=ci)
+            except:
+                print("Inserting M-M sense {}...".format(ci))
+                # I'd like to more fully understand what's happening in the below 2 lines...
+                senses = cm.Senses(sense=ci)
+                senses.save()
+
+            # Create entry in through table now.
+            zz = cm.SensesCreature(sense = senses,
+                                                creature = creature)
+
+            zz.save()
+
     print('\n')
