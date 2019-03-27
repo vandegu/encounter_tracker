@@ -314,10 +314,6 @@ for e in entries[:]:
                 cis = out+a[1:]
             else:
                 cis = a
-            # qqq.write(e['damage_immunities']+'\n')
-            # for zzz in cis:
-            #     qqq.write('{}|'.format(zzz))
-            # qqq.write('\n\n\n')
         else:
             cis = e['damage_immunities'].split(', ')
             # qqq.write(e['damage_immunities']+'\n')
@@ -335,6 +331,35 @@ for e in entries[:]:
 
             # Create entry in through table now.
             zz = cm.DamageImmunitiesCreature(damageImmunity = damageImmunity,
+                                                creature = creature)
+
+            zz.save()
+
+    if 'damage_resistances' in e and e['damage_resistances'] != None and e['damage_resistances'] != '':
+        if re.search(r'from',e['damage_resistances']):
+            a = e['damage_resistances'].split('; ')
+            if len(a)>1:
+                out = a[0].split(', ')
+                cis = out+a[1:]
+            else:
+                cis = a
+        else:
+            cis = e['damage_resistances'].split(', ')
+            # qqq.write(e['damage_immunities']+'\n')
+            # for zzz in cis:
+            #     qqq.write('{}|'.format(zzz))
+            # qqq.write('\n\n\n')
+        for ci in cis:
+            try:
+                damageResistance = cm.DamageType.objects.get(damageType=ci)
+            except:
+                print("Inserting M-M damage resistance {}...".format(ci))
+                # I'd like to more fully understand what's happening in the below 2 lines...
+                damageResistance = cm.DamageType(damageType=ci)
+                damageResistance.save()
+
+            # Create entry in through table now.
+            zz = cm.DamageResistancesCreature(damageResistance = damageResistance,
                                                 creature = creature)
 
             zz.save()

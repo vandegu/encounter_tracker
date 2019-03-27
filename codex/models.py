@@ -176,8 +176,8 @@ class Creature(models.Model):
     conditionImmunities = models.ManyToManyField(ConditionImmunities,through='ConditionImmunitiesCreature',
                                                  #related_name='creatures',
                                                  )
-    damageImmunities = models.ManyToManyField(DamageType,through='DamageImmunitiesCreature')
-    # damageResistances = models.ManyToManyField(DamageResistances,null=True)
+    damageImmunities = models.ManyToManyField(DamageType,through='DamageImmunitiesCreature',related_name='immunity')
+    damageResistances = models.ManyToManyField(DamageType,through='DamageResistancesCreature',related_name='resistance')
     # damageVulnerabilities = models.ManyToManyField(DamageVulnerabilities,null=True)
     # languages = models.ManyToManyField(Languages,null=True) # Explanation area? Or just str...
     # senses = models.ManyToManyField(Senses,null=True)
@@ -190,6 +190,11 @@ class Creature(models.Model):
 
 
 # Through tables for many-to-many:
+#
+# Note: For many-to-many relationships, simply define the two models on either side,
+# then define the through table as a table with a foreign key to both. Neither of
+# the sides should have any indication of the other...all their pairing info is stored
+# in the through table. Furthermore, this means that NULLs are not needed whatsoever.
 
 class ConditionImmunitiesCreature(models.Model):
 
@@ -199,6 +204,11 @@ class ConditionImmunitiesCreature(models.Model):
 class DamageImmunitiesCreature(models.Model):
 
     damageImmunity = models.ForeignKey(DamageType,on_delete=models.CASCADE)
+    creature = models.ForeignKey(Creature,on_delete=models.CASCADE)
+
+class DamageResistancesCreature(models.Model):
+
+    damageResistance = models.ForeignKey(DamageType,on_delete=models.CASCADE)
     creature = models.ForeignKey(Creature,on_delete=models.CASCADE)
 
 # Fields - Text: one (creature)-to-many (actions)
