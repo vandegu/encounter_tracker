@@ -1,0 +1,17 @@
+{% extends "codex/base_bootstrap.html" %}
+
+{% block content %}
+  <h1>Creature List</h1>
+  {% if creature_list %}
+  <ul>
+    {% for creature in creature_list %}
+      <li>
+        <!-- <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> ({{book.author}}) -->
+        {{creature.name}} - {{creature.type}}
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no creatures in the codex.</p>
+  {% endif %}
+{% endblock %}

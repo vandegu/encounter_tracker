@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# Used for a default title
+APP_NAME = 'MyEncounters'   # Add
 
 # Application definition
 
