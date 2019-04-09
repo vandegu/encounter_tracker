@@ -1,0 +1,156 @@
+{% extends "codex/base_bootstrap.html" %}
+
+{% block content %}
+  <h1>{{ creature.name }}</h1>
+  <p><i>{{creature.size}} | {{creature.alignment|capfirst}} | {{creature.type|capfirst}} | {{creature.subtype|capfirst}}</i></p>
+
+  <div id="basicStats">
+    <div id="abilityScores">
+
+      <table>
+
+        <tr>
+          <td><strong>Ability</strong></td>
+          <td><strong>Score</strong></td>
+          <td><strong>Save</strong></td>
+        </tr>
+
+        {% for ab in abilities %}
+          <tr>
+            <td>{{ab.0}}</td>
+            <td>{{ab.1}}</td>
+            <td>{{ab.2}}</td>
+          </tr>
+        {% endfor %}
+
+      </table>
+
+    </div>
+
+    <div id="skills">
+      <ul>
+        {% for s in skills %}
+          <li><i>{{s.0}}:</i> {{s.1}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div id="leadStats">
+      <ul>
+        <li><strong>Hit Points:</strong> {{creature.hitPoints}} ({{creature.hitDieNum}}{{creature.hitDieType}})</li>
+        <li><strong>Armor Class:</strong> {{creature.armorClass}}</li>
+        <li><strong>Speed:</strong> {{ creature.speed.all|join:", " }}</li>
+        <li><strong>Senses:</strong> {{ creature.senses.all|join:", " }} <span id="pp">(passive perception {{creature.passivePerception}})</span></li>
+        <li><strong>Proficiency Bonus:</strong> {{creature.proficiencyBonus}}</li>
+        <li><strong>Challenge Rating:</strong> {{creature.challengeRating}}</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div id="m2m">
+    <ul>
+      {% if creature.conditionImmunities.all %}
+        <li>Condition Immunities: {{ creature.conditionImmunities.all|join:", " }}</li>
+      {% endif %}
+      {% if creature.damageImmunities.all %}
+        <li>Damage Immunities: {{ creature.damageImmunities.all|join:", " }}</li>
+      {% endif %}
+      {% if creature.damageResistances.all %}
+        <li>Damage Resistences: {{ creature.damageResistances.all|join:", " }}</li>
+      {% endif %}
+      {% if creature.damageVulnerabilities.all %}
+        <li>Damage Vulnerabilities: {{ creature.damageVulnerabilities.all|join:", " }}</li>
+      {% endif %}
+      <li>Languages: {{ creature.languages.all|join:", " }}</li>
+    </ul>
+  </div>
+
+  <div class='accordion'>
+
+    <h2>Actions ({{creature.actions_set.count}})</h2>
+    <div id="actions">
+      <ol>
+        {% for a in creature.actions_set.all %}
+          <li>
+            <strong>{{a.name}}</strong>
+            <ul>
+              <li><i>Description:</i><br>{{a.desc}}</li>
+              <li><i>Attack Bonus:</i> {{a.attackBonus}}</li>
+              <li><i>Damage Dice:</i> {{a.damageDice}}</li>
+              <li><i>Damage Bonus:</i> {{a.damageBonus}}</li>
+            </ul>
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+
+    <h2>Legendary Actions ({{creature.legendaryactions_set.count}})</h2>
+    <div id="legendaryActions">
+      <ol>
+        {% for a in creature.legendaryactions_set.all %}
+          <li>
+            <strong>{{a.name}}</strong>
+            <ul>
+              <li><i>Description: </i><br>{{a.desc}}</li>
+              <li><i>Attack Bonus: </i>{{a.attackBonus}}</li>
+              <li><i>Damage Dice: </i>{{a.damageDice}}</li>
+            </ul>
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+
+    <h2>Special Abilities ({{creature.specialabilities_set.count}})</h2>
+    <div id="specialAbilities">
+      <ol>
+        {% for a in creature.specialabilities_set.all %}
+          <li>
+            <strong>{{a.name}}</strong>
+            <ul>
+              <li><i>Description: </i><br>{{a.desc}}</li>
+              <li><i>Attack Bonus: </i>{{a.attackBonus}}</li>
+              <li><i>Damage Dice: </i>{{a.damageDice}}</li>
+            </ul>
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+
+    <h2>Reactions ({{creature.reactions_set.count}})</h2>
+    <div id="reactions">
+      <ol>
+        {% for a in creature.reactions_set.all %}
+          <li>
+            <strong>{{a.name}}</strong>
+            <ul>
+              <li><i>Description: </i><br>{{a.desc}}</li>
+              <li><i>Attack Bonus: </i>{{a.attackBonus}}</li>
+            </ul>
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+
+
+
+
+<!--
+  <p><strong>Author:</strong> <a href="">{{ book.author }}</a></p>
+  <p><strong>Summary:</strong> {{ book.summary }}</p>
+  <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+  <p><strong>Language:</strong> {{ book.language }}</p>
+  <p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+ -->
+
+  <script type="text/javascript">
+    $( function() {
+      $( ".accordion" ).accordion({
+        active: false,
+        collapsible: true,
+        heightStyle: "content",
+      });
+    } );
+  </script>
+{% endblock %}

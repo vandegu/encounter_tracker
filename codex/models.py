@@ -31,7 +31,7 @@ class Size(models.Model):
     # Fields
     size = models.CharField(max_length=24)
 
-    def __Str__(self,):
+    def __str__(self,):
 
         return self.size
 
@@ -40,7 +40,7 @@ class Subtype(models.Model):
     # Fields
     subtype = models.CharField(max_length=128)
 
-    def __Str__(self,):
+    def __str__(self,):
 
         return self.subtype
 

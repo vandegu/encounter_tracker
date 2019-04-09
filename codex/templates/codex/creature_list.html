@@ -7,7 +7,7 @@
     {% for creature in creature_list %}
       <li>
         <!-- <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> ({{book.author}}) -->
-        {{creature.name}} - {{creature.type}}
+        <a href="{% url 'creature_detail'  creature.id %}">{{creature.name}} - {{creature.type}}</a>
       </li>
     {% endfor %}
   </ul>
