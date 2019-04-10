@@ -1,9 +1,11 @@
 {% extends "codex/base_bootstrap.html" %}
 
 {% block content %}
+
+  <div id="creature-list-page">
   <h1>Creature List</h1>
   {% if creature_list %}
-  <ul>
+  <ul id="creature-list">
     {% for creature in creature_list %}
       <li>
         <!-- <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> ({{book.author}}) -->
@@ -14,4 +16,8 @@
   {% else %}
     <p>There are no creatures in the codex.</p>
   {% endif %}
+  </div>
+
+
+
 {% endblock %}

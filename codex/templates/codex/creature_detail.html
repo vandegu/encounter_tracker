@@ -1,11 +1,16 @@
 {% extends "codex/base_bootstrap.html" %}
 
 {% block content %}
-  <h1>{{ creature.name }}</h1>
-  <p><i>{{creature.size}} | {{creature.alignment|capfirst}} | {{creature.type|capfirst}} | {{creature.subtype|capfirst}}</i></p>
+
+  <div id="banner">
+    <h1>{{ creature.name }}</h1>
+    <p><i>{{creature.size}} | {{creature.alignment|capfirst}} | {{creature.type|capfirst}} | {{creature.subtype|capfirst}}</i></p>
+  </div>
 
   <div id="basicStats">
-    <div id="abilityScores">
+    <div class="basicStats-block" id="abilityScores">
+
+      <h2>Abilities</h2>
 
       <table>
 
@@ -27,7 +32,8 @@
 
     </div>
 
-    <div id="skills">
+    <div class="basicStats-block" id="skills">
+      <h2>Skills</h2>
       <ul>
         {% for s in skills %}
           <li><i>{{s.0}}:</i> {{s.1}}</li>
@@ -35,7 +41,8 @@
       </ul>
     </div>
 
-    <div id="leadStats">
+    <div class="basicStats-block" id="leadStats">
+      <h2>Combat</h2>
       <ul>
         <li><strong>Hit Points:</strong> {{creature.hitPoints}} ({{creature.hitDieNum}}{{creature.hitDieType}})</li>
         <li><strong>Armor Class:</strong> {{creature.armorClass}}</li>
@@ -43,27 +50,23 @@
         <li><strong>Senses:</strong> {{ creature.senses.all|join:", " }} <span id="pp">(passive perception {{creature.passivePerception}})</span></li>
         <li><strong>Proficiency Bonus:</strong> {{creature.proficiencyBonus}}</li>
         <li><strong>Challenge Rating:</strong> {{creature.challengeRating}}</li>
+        {% if creature.conditionImmunities.all %}
+          <li><strong>Condition Immunities:</strong> {{ creature.conditionImmunities.all|join:", " }}</li>
+        {% endif %}
+        {% if creature.damageImmunities.all %}
+          <li><strong>Damage Immunities:</strong> {{ creature.damageImmunities.all|join:", " }}</li>
+        {% endif %}
+        {% if creature.damageResistances.all %}
+          <li><strong>Damage Resistences:</strong> {{ creature.damageResistances.all|join:", " }}</li>
+        {% endif %}
+        {% if creature.damageVulnerabilities.all %}
+          <li><strong>Damage Vulnerabilities:</strong> {{ creature.damageVulnerabilities.all|join:", " }}</li>
+        {% endif %}
+        {% if creature.languages.all %}
+          <li><strong>Languages:</strong> {{ creature.languages.all|join:", " }}</li>
+        {% endif %}
       </ul>
     </div>
-
-  </div>
-
-  <div id="m2m">
-    <ul>
-      {% if creature.conditionImmunities.all %}
-        <li>Condition Immunities: {{ creature.conditionImmunities.all|join:", " }}</li>
-      {% endif %}
-      {% if creature.damageImmunities.all %}
-        <li>Damage Immunities: {{ creature.damageImmunities.all|join:", " }}</li>
-      {% endif %}
-      {% if creature.damageResistances.all %}
-        <li>Damage Resistences: {{ creature.damageResistances.all|join:", " }}</li>
-      {% endif %}
-      {% if creature.damageVulnerabilities.all %}
-        <li>Damage Vulnerabilities: {{ creature.damageVulnerabilities.all|join:", " }}</li>
-      {% endif %}
-      <li>Languages: {{ creature.languages.all|join:", " }}</li>
-    </ul>
   </div>
 
   <div class='accordion'>
@@ -133,24 +136,16 @@
     </div>
   </div>
 
-
-
-
-<!--
-  <p><strong>Author:</strong> <a href="">{{ book.author }}</a></p>
-  <p><strong>Summary:</strong> {{ book.summary }}</p>
-  <p><strong>ISBN:</strong> {{ book.isbn }}</p>
-  <p><strong>Language:</strong> {{ book.language }}</p>
-  <p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
- -->
-
   <script type="text/javascript">
+
     $( function() {
       $( ".accordion" ).accordion({
+        icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" },
         active: false,
         collapsible: true,
         heightStyle: "content",
       });
     } );
+
   </script>
 {% endblock %}

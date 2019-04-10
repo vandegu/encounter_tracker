@@ -9,6 +9,8 @@ from codex.models import *
 class CreatureListView(generic.ListView):
     model = Creature
 
+    # paginate_by = 20
+
 class CreatureDetailView(generic.DetailView):
     model = Creature
     template_name = "codex/creature_detail.html"

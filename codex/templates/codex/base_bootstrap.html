@@ -4,8 +4,6 @@
     <!-- Edit samples/settings.py and add APP_NAME = 'DJ4e Samples' or similar -->
     <title>{% block title %}{{ settings.APP_NAME }}{% endblock %}</title>
 
-<meta name="wa4e" content="202cb962ac59075b964b07152d234b70">
-
 <link rel="stylesheet"
     href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
     crossorigin="anonymous">
@@ -41,12 +39,119 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
 
+<style media="screen">
+
+  h1 {
+    color: #000000;
+    font-size: 60px;
+  }
+
+  #banner p {
+    color: #999999;
+  }
+
+  .ui-state-default{
+     background-image: linear-gradient(#f2f2f2, #cccccc);
+     color: red;
+  }
+
+  .ui-accordion-header.ui-state-active {
+    background-image: linear-gradient(#ffe6e6,#ffcccc);
+    border-color: red;
+  }
+
+  .ui-accordion-header.ui-state-hover {
+    border-color: red;
+  }
+
+  body {
+    background-color: #555555;
+    z-index: -100;
+    min-height: 100%;
+  }
+
+  div#basicStats {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  div.basicStats-block {
+    border: 2px solid black;
+    border-radius: 4px;
+    padding: 20px;
+    min-width: 100px;
+    margin: 20px 2px;
+  }
+
+  div.basicStats-block {
+    background-color: rgba(256,256,256,.5);
+  }
+
+  div.basicStats-block ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 30%;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+
+  div.basicStats-block h2 {
+    color: red;
+    font-size: 20px;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+
+/* List page */
+
+  #creature-list-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  ul#creature-list {
+    list-style-type: none;
+    margin: 20px;
+    padding: 12px;
+    border: 2px solid red;
+    border-radius: 4px;
+    width: 400px;
+    background-color: rgba(256,256,256,.5);
+  }
+
+  ul#creature-list li {
+    color: red;
+    font-size: 20px;
+  }
+
+  ul#creature-list li a {
+    color: black;
+  }
+
+
+</style>
+
 </head>
 <body>
+<main id="content">
 {% block navbar %} {% endblock %}
 <div class="container">
     {% block content %}
     {% endblock %}
 </div>
+</main>
 </body>
 </html>
