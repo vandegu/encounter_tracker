@@ -44,6 +44,7 @@
   h1 {
     color: #000000;
     font-size: 60px;
+    /* text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red; */
   }
 
   #banner p {
@@ -87,6 +88,7 @@
 
   div.basicStats-block {
     background-color: rgba(256,256,256,.5);
+    max-width: 45vw;
   }
 
   div.basicStats-block ul {
@@ -112,6 +114,10 @@
     text-align: center;
     margin: 0;
     margin-bottom: 10px;
+  }
+
+  div.accordion {
+    margin: 20px;
   }
 
 /* List page */
@@ -141,6 +147,26 @@
     color: black;
   }
 
+/* Home page */
+
+  div#welcome-splash {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid red;
+    border-radius: 4px;
+    padding: 20px;
+    background-color: rgba(256,256,256,.5);
+  }
+
+  div#outer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+  }
 
 </style>
 

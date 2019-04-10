@@ -1,0 +1,24 @@
+{% extends 'codex/base_bootstrap.html' %}
+{% load app_tags %} <!-- see home/templatetags/app_tags.py -->
+{% block navbar %}
+<!-- https://www.w3schools.com/booTsTrap/bootstrap_navbar.asp -->
+<nav class="navbar navbar-default navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <!-- This is how to add things to the context https://stackoverflow.com/questions/433162/can-i-access-constants-in-settings-py-from-templates-in-django -->
+        <a class="navbar-brand" href="{% url 'home' %}">{{ APP_NAME }}</a>
+    </div>
+    <!-- https://stackoverflow.com/questions/22047251/django-dynamically-get-view-url-and-check-if-its-the-current-page -->
+    <ul class="nav navbar-nav">
+      {% url 'codex' as menu_main %}
+      <li {% if request.get_full_path == menu_main %}class="active"{% endif %}>
+          <a href="{% url 'codex' %}">Codex</a></li>
+
+    </ul>
+
+  </div>
+</nav>
+{% endblock %}
+
+<!-- gravatar depends on app_tags being loaded -->
+<!-- https://brobin.me/blog/2016/07/super-simple-django-gravatar/ -->

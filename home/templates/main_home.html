@@ -1,0 +1,20 @@
+{% extends "codex/base_menu.html" %}
+
+{% block content %}
+
+<div id="outer">
+  <div id="welcome-splash">
+    <h1>Welcome to CreatureCodex!</h1>
+    <h2>Things you can do with this application:</h2>
+    <ul>
+      <li>Look up 5th Edition Dungeons and Dragons creature stats!</li>
+      <li>Manage Dungeons and Dragons encounters!</li>
+      <li>Create a profile to save your encounters for later!</li>
+      <li><strong>To start, try <a href="{% url 'codex' %}">checking out our Codex</a> or <a href="">logging in!</a></strong></li>
+    </ul>
+  </div>
+</div>
+
+
+
+{% endblock %}
