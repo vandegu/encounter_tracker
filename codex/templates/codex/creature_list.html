@@ -2,13 +2,14 @@
 
 {% block content %}
 
+  <!-- <input type="text" onkeyup="filter(this,'#creature-list')" /> -->
+
   <div id="creature-list-page">
   <h1>Creature List</h1>
   {% if creature_list %}
   <ul id="creature-list">
     {% for creature in creature_list %}
       <li>
-        <!-- <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> ({{book.author}}) -->
         <a href="{% url 'creature_detail'  creature.id %}">{{creature.name}} - {{creature.type}}</a>
       </li>
     {% endfor %}
@@ -18,6 +19,24 @@
   {% endif %}
   </div>
 
+  <!-- <script>
+    function filter (element,what) {
+        var value = $(element).val();
+        value = value.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+            return letter.toUpperCase();
+        });
+
+        // console.log(value)
+
+        if (value == '') {
+            $(what+' > li').show();
+        }
+        else {
+            $(what + ' > li > a:not(:contains(' + value + '))').hide();
+            $(what + ' > li > a:contains(' + value + ')').show();
+        }
+    };
+  </script> -->
 
 
 {% endblock %}

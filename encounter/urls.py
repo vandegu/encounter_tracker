@@ -26,6 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('codex/', include('codex.urls')),
     path('', include('home.urls')),
+    path('battle/', include('battle.urls'))
 ]
 
 #Add Django site authentication urls (for login, logout, password management)

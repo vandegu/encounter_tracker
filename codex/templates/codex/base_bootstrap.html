@@ -120,7 +120,7 @@
     margin: 20px;
   }
 
-/* List page */
+/* Creature list page */
 
   #creature-list-page {
     display: flex;
@@ -134,7 +134,7 @@
     padding: 12px;
     border: 2px solid red;
     border-radius: 4px;
-    width: 400px;
+    width: 500px;
     background-color: rgba(256,256,256,.5);
   }
 
@@ -145,6 +145,44 @@
 
   ul#creature-list li a {
     color: black;
+  }
+
+/* Battle list page */
+
+  #battle-list-page {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .trans_div {
+    border: 2px solid red;
+    border-radius: 4px;
+    width: 500px;
+    background-color: rgba(256,256,256,.5);
+    margin: 20px;
+    padding: 12px;
+    list-style-type: none;
+  }
+
+  ul#creature-list li form {
+    display: inline;
+    position: relative;
+    top: -4px;
+  }
+
+  input[type=button].button-adjust {
+    color: red;
+    border: 2px solid red;
+    border-radius: 190px;
+    font-size: 12px;
+  }
+
+  input[type=button].button-adjust:hover {
+    background-color: #ffcccc;
+  }
+
+  input[type=button].button-adjust:active {
+    background-image: linear-gradient(#a6a6a6,#ffcccc);
   }
 
 /* Home page */

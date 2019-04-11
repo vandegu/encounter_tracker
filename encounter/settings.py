@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'codex.apps.CodexConfig',
     'home.apps.HomeConfig',
+    'battle.apps.BattleConfig',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,57 @@
+{% extends "codex/base_menu.html" %}
+
+{% block content %}
+
+<h1>hello</h1>
+
+<input type="text" class="searchText" onkeyup="filter(this,'#creature-list')" />
+
+<div id="battle-list-page">
+  <div id="creature-list-page">
+    <h2>Select Participants</h2>
+    {% if creature_list %}
+    <ul id="creature-list">
+      {% for creature in creature_list %}
+        <li>
+          <form>
+            <input type="button" value="+" class="button-adjust" name="1-{{ creature.id }}">
+            <input type="button" value="-" class="button-adjust" name="0-{{ creature.id }}">
+          </form>
+          <a href="{% url 'creature_detail'  creature.id %}">{{creature.name}} - {{creature.type}}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+      <p>There are no creatures in the codex.</p>
+    {% endif %}
+  </div>
+  <div id="creature-list-page">
+    <h2>Currently Participating</h2>
+    <ul class="trans_div">
+      <li>You have not selected any participants!</li>
+    </ul>
+  </div>
+</div>
+
+
+
+
+<script>
+  function filter (element,what) {
+      var value = $(element).val();
+      value = value.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+          return letter.toUpperCase();
+      });
+
+      if (value == '') {
+          $(what+' > li').show();
+      }
+      else {
+          $(what + ' > li:not(:contains(' + value + '))').hide();
+          $(what + ' > li:contains(' + value + ')').show();
+      }
+  };
+</script>
+
+
+{% endblock %}
