@@ -4,7 +4,15 @@
 
   <div id="encounter-container">
 
-    
+
+    {% for a in encounterinstance.creatureinstance_set.all %}
+      <div class="encounter-item">
+        <p>{{a.creature}}</p>
+        <p><strong>HP: </strong>{{a.currentHitPoints}}/{{a.creature.hitPoints}}</p>
+        <p><strong>AC: </strong>{{a.ac}}</p>
+      </div>
+    {% endfor %}
+
 
   </div>
 

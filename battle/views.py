@@ -12,9 +12,11 @@ from codex.models import *
 
 # Create your views here.
 
-class BattleDetailView(LoginRequiredMixin, View):
+class BattleDetailView(LoginRequiredMixin,generic.DetailView):
     model = EncounterInstance
     template_name = 'battle/battle_detail.html'
+    # Do a def get and obj or 404 here to make sure owner is the one viewing this page.
+    
 
 class BattleCreateView(LoginRequiredMixin, View):
     template = 'battle/battle_form.html'

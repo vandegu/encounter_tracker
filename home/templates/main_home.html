@@ -14,8 +14,19 @@
         <li><strong>To start, try <a href="{% url 'codex' %}">checking out our Codex</a> or <a href="{% url 'login' %}">logging in!</a></strong></li>
       </ul>
     {% else %}
-      <h1>Welcome back, {{ user.get_username }}!</h1>
-      <p><a href="{% url 'battle_create' %}">Start an Encounter</a>
+      {% if encounters %}
+        <h1>My Encounters:</h1>
+        <ul>
+        {% for enc in encounters %}
+          {% if enc.owner_id_id == userid %}
+          <li><a href="{% url 'battle_detail'  enc.id %}">{{enc.name}}</li>
+          {% endif %}
+        {% endfor %}
+        </ul>
+      {% else %}
+        <h1>Welcome back, {{ user.get_username }}!</h1>
+        <p><a href="{% url 'battle_create' %}">Start an Encounter</a>
+      {% endif %}
     {% endif %}
 
   </div>
