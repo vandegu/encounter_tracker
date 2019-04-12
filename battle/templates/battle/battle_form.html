@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1>hello</h1>
+<h1>Search</h1>
 
 <input type="text" class="searchText" onkeyup="filter(this,'#creature-list')" />
 
@@ -17,7 +17,7 @@
             <input type="button" value="+" class="button-adjust" name="{{creature.name}}-{{ creature.id }}">
             <input type="button" value="-" class="button-adjust" name="{{creature.name}}-{{ creature.id }}">
           </form>
-          <a href="{% url 'creature_detail'  creature.id %}">{{creature.name}} - {{creature.type}}</a>
+          <a href="{% url 'creature_detail'  creature.id %}" target="_blank">{{creature.name}} - {{creature.type}}</a>
         </li>
       {% endfor %}
     </ul>
@@ -27,13 +27,17 @@
   </div>
   <div id="creature-list-page">
     <h2>Currently Participating</h2>
-    <form>
-      <ul id="currently-participating" class="trans_div">
-        <li id="empty-encounter-message"><strong>You have no one participating in your encounter!</strong> Let's change that. Select the (+) button on a creature to the left, or search for a creature in the search bar above.</li>
-        <!-- To be filled dynamically with jQuery -->
-      </ul>
-      <p id="submit-encounter"><input type="submit" value="Start Encounter!" class="button-adjust"></p>
-    </form>
+    <div class='trans_div'>
+      <form method='post'>
+        {% csrf_token %}
+        <p>What will you name your encounter? {% if validationError %}<span class='error'>{{validationError}}</span>{% endif %}<input type="text" class="searchText" name="encounterName" /></p>
+        <ul id="currently-participating">
+          <li id="empty-encounter-message"><strong>You have no one participating in your encounter!</strong> Let's change that. Select the (+) button on a creature to the left, or search for a creature in the search bar above.</li>
+          <!-- To be filled dynamically with jQuery -->
+        </ul>
+        <p id="submit-encounter"><input type="submit" value="Start Encounter!" class="button-adjust" /></p>
+      </form>
+    </div>
   </div>
 </div>
 

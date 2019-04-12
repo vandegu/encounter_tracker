@@ -15,7 +15,7 @@
       </ul>
     {% else %}
       <h1>Welcome back, {{ user.get_username }}!</h1>
-      <p><a href="">Start an Encounter</a>
+      <p><a href="{% url 'battle_create' %}">Start an Encounter</a>
     {% endif %}
 
   </div>
