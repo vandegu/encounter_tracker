@@ -14,7 +14,8 @@ class HomeView(View):
     def get(self, request):
 
         ctx = {}
-        ctx['encounters'] = EncounterInstance.objects.all()
+        encs = EncounterInstance.objects.filter(owner_id=self.request.user.id)
+        ctx['encounters'] = encs
         ctx['userid'] = self.request.user.id
 
         return render(request, 'main_home.html', ctx)
