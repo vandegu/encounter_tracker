@@ -2,11 +2,13 @@
 
 {% block content %}
 
-<h1>Search</h1>
+<div id="search-bar">
+  <h1>Search</h1>
 
-<input type="text" class="searchText" onkeyup="filter(this,'#creature-list')" />
+  <input type="text" class="searchText" onkeyup="filter(this,'#creature-list')" />
 
-<h3 class="error" id="nameError">You must include a name for your encounter!</h3>
+  <h3 class="error" id="nameError">You must include a name for your encounter!</h3>
+</div>
 
 <div id="battle-list-page">
   <div id="creature-list-page">

@@ -4,7 +4,10 @@
 
   <div id="encounter-container">
 
-    <form method="post">
+    <h1>{{encounterinstance.name}}</h1>
+    <p id="instructions"><strong>Manage your encounter here!</strong> Hover over the initiative and HP fields to modify them. <br/> Click and drag creatures to re-organize them. Click on a creature's name to learn more about it.<br/>Be sure to save your encounter after all major events!</p>
+
+    <form method="post" id="sortable">
       {% csrf_token %}
 
       {% for a in encounterinstance.creatureinstance_set.all %}
@@ -15,7 +18,7 @@
           <p><strong>AC: </strong>{{a.ac}}</p>
         </div>
       {% endfor %}
-      <div>
+      <div id="encounter-container">
         <input type="submit" value="Save" id="button-save-encounter">
       </div>
     </form>
@@ -24,8 +27,8 @@
 
   <script type="text/javascript">
     $( function() {
-       $( "#encounter-container" ).sortable();
-       $( "#encounter-container" ).disableSelection();
+       $( "#sortable" ).sortable();
+       $( "#sortable" ).disableSelection();
      } );
   </script>
 
