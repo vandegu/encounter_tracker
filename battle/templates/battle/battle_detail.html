@@ -4,16 +4,21 @@
 
   <div id="encounter-container">
 
+    <form method="post">
+      {% csrf_token %}
 
-    {% for a in encounterinstance.creatureinstance_set.all %}
-      <div class="encounter-item">
-        <p><a href="{% url 'creature_detail'  a.creature.id %}" target="_blank">{{a.creature}}</a></p>
-        <p><strong>Initiative: </strong><input type='number' class='intTracker' name="ini-{{a.id}}" value={{a.init}} /></p>
-        <p><strong>HP: </strong><input type='number' class='intTracker' name="chp-{{a.id}}" value={{a.currentHitPoints}} />/{{a.creature.hitPoints}}</p>
-        <p><strong>AC: </strong>{{a.ac}}</p>
+      {% for a in encounterinstance.creatureinstance_set.all %}
+        <div class="encounter-item">
+          <p><a href="{% url 'creature_detail'  a.creature.id %}" target="_blank">{{a.creature}}</a></p>
+          <p><strong>Initiative: </strong><input type='number' class='intTracker' name="ini-{{a.id}}" value={{a.init}} /></p>
+          <p><strong>HP: </strong><input type='number' class='intTracker' name="chp-{{a.id}}" value={{a.currentHitPoints}} />/{{a.creature.hitPoints}}</p>
+          <p><strong>AC: </strong>{{a.ac}}</p>
+        </div>
+      {% endfor %}
+      <div>
+        <input type="submit" value="Save" id="button-save-encounter">
       </div>
-    {% endfor %}
-
+    </form>
 
   </div>
 

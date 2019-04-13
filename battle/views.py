@@ -15,11 +15,33 @@ from codex.models import *
 class BattleDetailView(LoginRequiredMixin,generic.DetailView):
     model = EncounterInstance
     template_name = 'battle/battle_detail.html'
+
     # Do a def get and obj or 404 here to make sure owner is the one viewing this page.
     def get(self, request, pk):
         encounterinstance = get_object_or_404(EncounterInstance, id=pk, owner_id=self.request.user)
         context = {'encounterinstance' : encounterinstance}
         return render(request, self.template_name, context)
+
+    def post(self,request,pk):
+        #success_url = reverse_lazy('battle_detail', kwargs={'pk': pk})
+        print(request.POST)
+
+        # Loop through all of the fields retrieved except the CSRF token, parse them, and update database.
+        for item in list(request.POST.keys())[1:]:
+            items = item.split('-')
+            field = items[0]
+            creatureInstance_id = items[1]
+            creatureInstance = CreatureInstance.objects.get(id=creatureInstance_id)
+            if field == 'ini':
+                creatureInstance.init = request.POST[item]
+            else:
+                creatureInstance.currentHitPoints = request.POST[item]
+            creatureInstance.save()
+
+        encounterinstance = get_object_or_404(EncounterInstance, id=pk, owner_id=self.request.user)
+        context = {'encounterinstance' : encounterinstance}
+
+        return render(request,self.template_name,context)
 
 
 class BattleCreateView(LoginRequiredMixin, View):
