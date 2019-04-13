@@ -23,4 +23,5 @@ class CreatureInstance(models.Model):
     currentHitPoints = models.IntegerField(null=True)
     maxHitPoits = models.IntegerField(null=True)
     ac = models.IntegerField(null=True)
+    init = models.IntegerField(null=True)
     encounter = models.ForeignKey(EncounterInstance,on_delete=models.CASCADE,null=True)

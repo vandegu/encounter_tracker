@@ -213,16 +213,20 @@
   div.encounter-item {
     border: 2px solid red;
     border-radius: 4px;
-    min-width: 600px;
+    min-width: 900px;
     background-color: rgba(256,256,256,.5);
-    margin: 20px;
+    margin: 10px;
     padding: 12px;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 5fr 2fr 2fr 1fr;
   }
 
   div.encounter-item p {
-    font-size: 24px;
+    font-size: 20px;
+  }
+
+  .intTracker {
+    width: 60px;
   }
 
 /* Home page */

@@ -47,15 +47,17 @@ class BattleCreateView(LoginRequiredMixin, View):
 
         # Separate the creatures from the rest now...
         for item in list(request.POST.keys())[2:]:
-            creature_name = item.split('-')[0].replace('_',' ')
-            creature = Creature.objects.get(name=creature_name)
-            cr = CreatureInstance(creature=creature,
-                currentHitPoints = getattr(creature,'hitPoints'),
-                maxHitPoits = getattr(creature,'hitPoints'),
-                ac = getattr(creature, "armorClass"),
-                encounter = ei
-            )
-            cr.save()
+            for i in range(int(request.POST[item])):
+                creature_name = item.split('-')[0].replace('_',' ')
+                creature = Creature.objects.get(name=creature_name)
+                cr = CreatureInstance(creature=creature,
+                    currentHitPoints = getattr(creature,'hitPoints'),
+                    maxHitPoits = getattr(creature,'hitPoints'),
+                    ac = getattr(creature, "armorClass"),
+                    init = 0,
+                    encounter = ei
+                )
+                cr.save()
 
         # Create Encounter instance in the db.
 
