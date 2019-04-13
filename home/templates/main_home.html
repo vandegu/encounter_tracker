@@ -16,7 +16,6 @@
     {% else %}
       {% if encounters %}
         <h1>My Encounters:</h1>
-        <h2>Select and Encounter to manage it</h2>
         <ul id='myEncounters'>
         {% for enc in encounters %}
           {% if enc.owner_id_id == userid %}
