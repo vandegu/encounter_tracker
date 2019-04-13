@@ -6,6 +6,8 @@
 
 <input type="text" class="searchText" onkeyup="filter(this,'#creature-list')" />
 
+<h3 class="error" id="nameError">You must include a name for your encounter!</h3>
+
 <div id="battle-list-page">
   <div id="creature-list-page">
     <h2>Select Participants</h2>
@@ -30,12 +32,12 @@
     <div class='trans_div'>
       <form method='post'>
         {% csrf_token %}
-        <p>What will you name your encounter? {% if validationError %}<span class='error'>{{validationError}}</span>{% endif %}<input type="text" class="searchText" name="encounterName" /></p>
+        <p>What will you name your encounter? {% if validationError %}<span class='error'><br/>{{validationError}}</span>{% endif %}<input type="text" class="searchText" name="encounterName" id="enc_name"/></p>
         <ul id="currently-participating">
           <li id="empty-encounter-message"><strong>You have no one participating in your encounter!</strong> Let's change that. Select the (+) button on a creature to the left, or search for a creature in the search bar above.</li>
           <!-- To be filled dynamically with jQuery -->
         </ul>
-        <p id="submit-encounter"><input type="submit" value="Start Encounter!" class="button-adjust" /></p>
+        <p id="submit-encounter"><input type="submit" value="Start Encounter!" class="button-adjust" id="submit-encounter-button" /></p>
       </form>
     </div>
   </div>
@@ -46,9 +48,18 @@
 
 <script>
 
-  $(document).ready(function() {
-    $('#submit-encounter').hide();
+  $("#submit-encounter-button").click(function(event){
+    var enc_name_field = $("#enc_name");
+    var enc_name = $("#enc_name").val().trim();
+
+    if (enc_name == '') {
+      event.preventDefault();
+      $("#nameError").show();
+      $("#enc_name").css({"border-color":"red","background-color":"#ffb3b3"});
+      $("#enc_name").closest('p').addClass('error')
+    }
   });
+
 
   function filter (element,what) {
       var value = $(element).val();

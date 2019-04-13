@@ -16,7 +16,7 @@ class BattleDetailView(LoginRequiredMixin,generic.DetailView):
     model = EncounterInstance
     template_name = 'battle/battle_detail.html'
     # Do a def get and obj or 404 here to make sure owner is the one viewing this page.
-    
+
 
 class BattleCreateView(LoginRequiredMixin, View):
     template = 'battle/battle_form.html'
@@ -29,9 +29,11 @@ class BattleCreateView(LoginRequiredMixin, View):
 
     def post(self, request, pk=None):
         print(request.POST)
-        # if request.POST['encounterName'].strip() == '':
-        #     print('BAD BAAD BAAAD')
-        #     return render(request,reverse_lazy('battle_create'),{'validationError' : "Must have non-empty encounter name!"})
+        if request.POST['encounterName'].strip() == '':
+            creatures = Creature.objects.all()
+            context = {'creature_list' : creatures,
+                'validationError' : "Must have non-empty encounter name!"}
+            return render(request,self.template,context)
 
         # Separate the name from the creatures and CSRF token...
         name = request.POST['encounterName']
