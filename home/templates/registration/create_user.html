@@ -1,0 +1,50 @@
+{% extends "codex/base_menu.html" %}
+
+{% block content %}
+<div id="create-body">
+  <div class="trans_div">
+    <p><strong>Enter a username and password:</strong></p>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <ul id="setup">
+        <li>Username: <input type="text" name="username">
+          {% if uError %}
+            <p class="errorPass">{{uError}}</p>
+          {% endif %}
+        </li>
+        <li>Password: <input type="text" name="pass1" id="pass1"></li>
+        <li>Retype Password: <input type="text" name="pass2" id="pass2">
+          {% if pError %}
+            <p class="errorPass">{{pError}}</p>
+          {% endif %}
+        </li>
+        <p id="passError" class="errorPass"><strong>Your passwords don't match!</strong><p>
+      </ul>
+
+      <input type="submit" class="btn btn-primary" value="Create User" id="cub">
+
+    </form>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  $("#cub").click( function(event) {
+    var p1 = $("#pass1").val();
+    var p2 = $("#pass2").val();
+
+
+    if (p1 != p2) {
+      event.preventDefault();
+      $('#passError').show();
+      console.log(p1,p2)
+    }
+  });
+
+</script>
+
+
+{% endblock %}

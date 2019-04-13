@@ -52,6 +52,10 @@
     font-size: 30px;
   }
 
+  p {
+    color: #000000;
+  }
+
   #banner p {
     color: #999999;
   }
@@ -225,7 +229,7 @@
     margin: 10px;
     padding: 12px;
     display: grid;
-    grid-template-columns: 5fr 2fr 2fr 1fr;
+    grid-template-columns: 1fr 5fr 2fr 2fr 1fr;
   }
 
   div.encounter-item p {
@@ -269,6 +273,42 @@
     align-items: center;
     justify-content: center;
     height: 90vh;
+  }
+
+  #myEncounters {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+  }
+
+/* Create user page */
+
+  #passError {
+    display: none;
+  }
+  .errorPass {
+    color: red;
+  }
+
+  ul#setup li {
+    color: #000000;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  div#create-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+  }
+
+  ul#setup li {
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+    text-align: right;
   }
 
 </style>

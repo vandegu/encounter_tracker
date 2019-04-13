@@ -34,8 +34,10 @@ class BattleDetailView(LoginRequiredMixin,generic.DetailView):
             creatureInstance = CreatureInstance.objects.get(id=creatureInstance_id)
             if field == 'ini':
                 creatureInstance.init = request.POST[item]
-            else:
+            elif field == 'chp':
                 creatureInstance.currentHitPoints = request.POST[item]
+            elif field == 'col':
+                creatureInstance.color = request.POST[item]
             creatureInstance.save()
 
         encounterinstance = get_object_or_404(EncounterInstance, id=pk, owner_id=self.request.user)
@@ -77,6 +79,7 @@ class BattleCreateView(LoginRequiredMixin, View):
                     maxHitPoits = getattr(creature,'hitPoints'),
                     ac = getattr(creature, "armorClass"),
                     init = 0,
+                    color = '#000000',
                     encounter = ei
                 )
                 cr.save()
@@ -85,20 +88,13 @@ class BattleCreateView(LoginRequiredMixin, View):
 
         return redirect(self.success_url)
 
-    # def get(self, request, pk=None) :
-    #     form = CreateForm()
-    #     ctx = { 'form': form }
-    #     return render(request, self.template, ctx)
-    #
-    # def post(self, request, pk=None) :
-    #     form = CreateForm(request.POST, request.FILES or None)
-    #
-    #     if not form.is_valid() :
-    #         ctx = {'form' : form}
-    #         return render(request, self.template, ctx)
-    #
-    #     # Add owner to the model before saving
-    #      = form.save(commit=False)
-    #     ad.owner = self.request.user
-    #     ad.save()
-    #     return redirect(self.success_url)
+class BattleDeleteView(LoginRequiredMixin,View):
+    # I'll just make it myself instead of inheriting from the generic delete view.
+    model = EncounterInstance
+    template_name = "battle/battle_delete.html"
+
+    def get(self, request, pk):
+        encounterinstance = get_object_or_404(EncounterInstance, id=pk, owner_id=self.request.user)
+        context = {'deleted_name' : encounterinstance.name}
+        encounterinstance.delete()
+        return render(request,self.template_name,context)

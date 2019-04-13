@@ -4,4 +4,5 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', views.HomeView.as_view(),name='home'),
+    path('createuser', views.CreateUser.as_view(),name='create_user')
 ]

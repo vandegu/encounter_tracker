@@ -5,13 +5,14 @@
   <div id="encounter-container">
 
     <h1>{{encounterinstance.name}}</h1>
-    <p id="instructions"><strong>Manage your encounter here!</strong> Hover over the initiative and HP fields to modify them. <br/> Click and drag creatures to re-organize them. Click on a creature's name to learn more about it.<br/>Be sure to save your encounter after all major events!</p>
+    <p id="instructions"><strong>Manage your encounter here!</strong> Hover over the initiative and HP fields to modify them. <br/> Click and drag creatures to re-organize them. Click on a creature's name to learn more about it.<br/>Assign colors to your creatures to keep them straight in a cataclysmic battle.<br/>Be sure to save your encounter after all major events!</p>
 
     <form method="post" id="sortable">
       {% csrf_token %}
 
       {% for a in encounterinstance.creatureinstance_set.all %}
         <div class="encounter-item">
+          <input type="color" name="col-{{a.id}}" value={{a.color}}>
           <p><a href="{% url 'creature_detail'  a.creature.id %}" target="_blank">{{a.creature}}</a></p>
           <p><strong>Initiative: </strong><input type='number' class='intTracker' name="ini-{{a.id}}" value={{a.init}} /></p>
           <p><strong>HP: </strong><input type='number' class='intTracker' name="chp-{{a.id}}" value={{a.currentHitPoints}} />/{{a.creature.hitPoints}}</p>

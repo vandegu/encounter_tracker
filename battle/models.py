@@ -24,4 +24,5 @@ class CreatureInstance(models.Model):
     maxHitPoits = models.IntegerField(null=True)
     ac = models.IntegerField(null=True)
     init = models.IntegerField(null=True)
+    color = models.CharField(max_length=8,null=True)
     encounter = models.ForeignKey(EncounterInstance,on_delete=models.CASCADE,null=True)

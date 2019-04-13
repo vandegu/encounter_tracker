@@ -15,7 +15,7 @@
           <a href="{% url 'codex' %}">Codex</a></li>
       {% url 'battle_create' as bc %}
       <li {% if request.get_full_path == bc %}class="active"{% endif %}>
-          <a href="{% url 'battle_create' %}">Create an encounter</a></li>
+          <a href="{% url 'battle_create' %}">Create an Encounter</a></li>
 
     </ul>
 
@@ -28,7 +28,7 @@
         </ul>
        </li>
        {% else %}
-       <li><a href="{% url 'login' %}?next={% url 'home' %}">Login</a></li>
+       <li><a href="{% url 'login' %}?next={% url 'home' %}">Login/Create User</a></li>
        {% endif %}
     </ul>
 
