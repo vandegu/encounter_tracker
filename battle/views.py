@@ -16,6 +16,10 @@ class BattleDetailView(LoginRequiredMixin,generic.DetailView):
     model = EncounterInstance
     template_name = 'battle/battle_detail.html'
     # Do a def get and obj or 404 here to make sure owner is the one viewing this page.
+    def get(self, request, pk):
+        encounterinstance = get_object_or_404(EncounterInstance, id=pk, owner_id=self.request.user)
+        context = {'encounterinstance' : encounterinstance}
+        return render(request, self.template_name, context)
 
 
 class BattleCreateView(LoginRequiredMixin, View):
