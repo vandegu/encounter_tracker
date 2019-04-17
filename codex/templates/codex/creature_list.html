@@ -4,6 +4,12 @@
 
   <!-- <input type="text" onkeyup="filter(this,'#creature-list')" /> -->
 
+  <div id="search-bar">
+    <h2>Search</h2>
+
+    <input type="text" class="searchText" onkeyup="filter(this,'#creature-list')" />
+  </div>
+
   <div id="creature-list-page">
   <h1>Creature List</h1>
   {% if creature_list %}
@@ -19,24 +25,22 @@
   {% endif %}
   </div>
 
-  <!-- <script>
+  <script>
     function filter (element,what) {
         var value = $(element).val();
         value = value.toLowerCase().replace(/\b[a-z]/g, function(letter) {
             return letter.toUpperCase();
         });
 
-        // console.log(value)
-
         if (value == '') {
             $(what+' > li').show();
         }
         else {
-            $(what + ' > li > a:not(:contains(' + value + '))').hide();
-            $(what + ' > li > a:contains(' + value + ')').show();
+            $(what + ' > li:not(:contains(' + value + '))').hide();
+            $(what + ' > li:contains(' + value + ')').show();
         }
     };
-  </script> -->
+  </script>
 
 
 {% endblock %}

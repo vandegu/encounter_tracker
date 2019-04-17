@@ -10,6 +10,9 @@
     </div>
     <!-- https://stackoverflow.com/questions/22047251/django-dynamically-get-view-url-and-check-if-its-the-current-page -->
     <ul class="nav navbar-nav">
+      {% url 'home' as home %}
+      <li {% if request.get_full_path == home %}class="active"{% endif %}>
+          <a href="{% url 'home' %}">My Encounters</a></li>
       {% url 'codex' as menu_main %}
       <li {% if request.get_full_path == menu_main %}class="active"{% endif %}>
           <a href="{% url 'codex' %}">Codex</a></li>

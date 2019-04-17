@@ -4,7 +4,7 @@
 
   <div id="banner">
     <h1>{{ creature.name }}</h1>
-    <p><i>{{creature.size}} | {{creature.alignment|capfirst}} | {{creature.type|capfirst}} | {{creature.subtype|capfirst}}</i></p>
+    <p><i>{{creature.size}} | {{creature.alignment|capfirst}} | {{creature.type|capfirst}} {% if creature.subtype %}| {{creature.subtype|capfirst}}{% endif %}</i></p>
   </div>
 
   <div id="basicStats">
